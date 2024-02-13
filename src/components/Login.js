@@ -5,9 +5,12 @@ import { auth } from "../utils/firebase";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
 	const email = useRef(null);
 	const password = useRef(null);
 	const name = useRef(null);
@@ -23,7 +26,6 @@ const Login = () => {
 		);
 		setErrorMsg(msg);
 		if (errormsg) return;
-    console.log('h');
 		if (!login) {
 			createUserWithEmailAndPassword(
 				auth,
@@ -33,14 +35,21 @@ const Login = () => {
 				.then((userCredential) => {
 					// Signed up
 					const user = userCredential.user;
-					console.log(user);
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/146195363?s=400&v=4"
+          }).then(() => {
+            navigate("/browse")
+          }).catch((error) => {
+            setErrorMsg(errormsg)
+          });
+					
 					// ...
 				})
 				.catch((error) => {
 					const errorCode = error.code;
 					const errorMessage = error.message;
 					setErrorMsg(errorMessage);
-					// ..
+					
 				});
 		} else {
 			signInWithEmailAndPassword(auth, email.current.value, password.current.value)
@@ -48,7 +57,7 @@ const Login = () => {
 					// Signed in
 					const user = userCredential.user;
           console.log(user);
-					// ...
+					navigate("/browse")
 				})
 				.catch((error) => {
 					const errorCode = error.code;

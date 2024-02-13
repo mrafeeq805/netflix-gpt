@@ -10,7 +10,11 @@ const Body = () => {
         {
             path : '/login',
             element : <Login/>
-        }
+        },
+        {
+          path : '/',
+          element : <Login/>
+      }
     ])
   return (
     <div>

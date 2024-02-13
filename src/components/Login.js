@@ -29,7 +29,10 @@ const Login = () => {
                 
             </form>
             <span className='text-red-500 text-sm block'>{errormsg}</span>
-            <span onClick={()=>setLogin(!login)} className='text-white mt-5 text-sm cursor-pointer select-none'>{login ? "New to Netflix ? Signup here" : "Already Registered ? Signin here"}</span>
+            <span onClick={()=>{
+              setLogin(!login)
+              setErrorMsg(null)
+              }} className='text-white mt-5 text-sm cursor-pointer select-none'>{login ? "New to Netflix ? Signup here" : "Already Registered ? Signin here"}</span>
           </div>
         </div>
         

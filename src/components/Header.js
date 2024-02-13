@@ -27,7 +27,7 @@ const Header = () => {
 			</div>
 			{user && (
 				<div className="mr-4 flex justify-center items-center gap-3">
-					<div className="h-10">
+					<div className="h-8">
 						<img className="h-full rounded-full" src={user?.photo} alt="logo" />
 					</div>
 					<button onClick={signoutHandler} className="text-xl font-bold">

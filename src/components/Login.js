@@ -5,12 +5,15 @@ import { auth } from "../utils/firebase";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-  updateProfile,
+	updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate()
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const email = useRef(null);
 	const password = useRef(null);
 	const name = useRef(null);
@@ -35,34 +38,50 @@ const Login = () => {
 				.then((userCredential) => {
 					// Signed up
 					const user = userCredential.user;
-          updateProfile(auth.currentUser, {
-            displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/146195363?s=400&v=4"
-          }).then(() => {
-            navigate("/browse")
-          }).catch((error) => {
-            setErrorMsg(errormsg)
-          });
-					
+					updateProfile(auth.currentUser, {
+						displayName: name.current.value,
+						photoURL:
+							"https://avatars.githubusercontent.com/u/146195363?s=400&v=4",
+					})
+						.then(() => {
+              const {email,uid,displayName,photoURL} = auth.currentUser
+							dispatch(
+								addUser({
+									uid: uid,
+									email: email,
+									name: displayName,
+									photo: photoURL,
+								})
+							);
+							navigate("/browse");
+						})
+						.catch((error) => {
+							setErrorMsg(errormsg);
+						});
+
 					// ...
 				})
 				.catch((error) => {
 					const errorCode = error.code;
 					const errorMessage = error.message;
 					setErrorMsg(errorMessage);
-					
 				});
 		} else {
-			signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+			signInWithEmailAndPassword(
+				auth,
+				email.current.value,
+				password.current.value
+			)
 				.then((userCredential) => {
 					// Signed in
 					const user = userCredential.user;
-          console.log(user);
-					navigate("/browse")
+					console.log(user);
+					navigate("/browse");
 				})
 				.catch((error) => {
 					const errorCode = error.code;
 					const errorMessage = error.message;
-          setErrorMsg(errorMessage)
+					setErrorMsg(errorMessage);
 				});
 		}
 	};

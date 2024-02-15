@@ -20,10 +20,10 @@ const Header = () => {
 						photo: photoURL,
 					})
 				);
-        navigate('/browse')
+        		navigate('/browse')
 			} else {
 				dispatch(removeUser());
-        navigate('/login')
+        		navigate('/login')
 			}
 		});
     return () => unsubscribe()
@@ -40,10 +40,10 @@ const Header = () => {
 			});
 	};
 	return (
-		<div className="w-full flex justify-between">
+		<div className="w-full absolute flex justify-between bg-gradient-to-b from-black z-50">
 			<div className="w-36 md:w-44">
 				<img
-					className="bg-gradient-to-b from-black"
+					className=""
 					src={LOGO}
 					alt="logo"
 				/>
@@ -53,7 +53,7 @@ const Header = () => {
 					<div className="h-8">
 						<img className="h-full rounded-full" src={user?.photo} alt="logo" />
 					</div>
-					<button onClick={signoutHandler} className="text-xl font-bold">
+					<button onClick={signoutHandler} className="text-xl font-bold text-white">
 						Sign Out
 					</button>
 				</div>

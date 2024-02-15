@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { addMovieDetails } from "../utils/movieSlice"
-import { API_OPTIONS } from "../utils/constants"
+import { addMovieDetails, addTrailer, addTrailerVideo } from "../utils/movieSlice"
+import { API_OPTIONS,URL } from "../utils/constants"
 
 const useGetMovieDetails = () =>{
     const dispatch = useDispatch()
@@ -11,8 +11,12 @@ const useGetMovieDetails = () =>{
     const getMovieList = async () =>{
         const data = await fetch(URL,API_OPTIONS)
         const json = await data.json()
-        //console.log(json.results);
+        const data2 = await fetch("https://api.themoviedb.org/3/movie/"+json.results[0].id+"/videos",API_OPTIONS)
+        const json2 = await data2.json()
+        dispatch(addTrailerVideo(json2.results[0]))
         dispatch(addMovieDetails(json.results))
+        dispatch(addTrailer(json.results[0]))
+        
     
     }
 }

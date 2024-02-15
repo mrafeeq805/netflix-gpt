@@ -23,7 +23,9 @@ const Body = () => {
 	]);
 	return (
 		<div>
-			<RouterProvider router={router}></RouterProvider>
+			<RouterProvider router={router}>
+        
+      </RouterProvider>
 		</div>
 	);
 };

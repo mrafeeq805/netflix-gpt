@@ -8,7 +8,7 @@ const SecondContainer = () => {
     
     
     <div className='bg-black'>
-      <div className='-mt-48 relative z-20'>
+      <div className='md:-mt-32 relative z-20'>
         {data.movieDetails && (
           <MovieList title={"Now Playing"} data={data.movieDetails}/>
         )}

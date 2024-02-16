@@ -43,15 +43,15 @@ const GPTLayout = () => {
         return json.results
     }
   return (
-    <div className="pt-32 h-screen bg-cover bg-black md:bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/5e16108c-fd30-46de-9bb8-0b4e1bbbc509/29d8d7d7-83cc-4b5f-aa9b-6fd4f68bfaa6/IN-en-20240205-popsignuptwoweeks-perspective_alpha_website_large.jpg)]">
-        <div className='bg-black p-3 rounded-md flex w-2/4 gap-4 h-max ml-64 mb-5'>
+    <div className="pt-32 h-screen bg-cover bg-black bg-repeat-y md:bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/5e16108c-fd30-46de-9bb8-0b4e1bbbc509/29d8d7d7-83cc-4b5f-aa9b-6fd4f68bfaa6/IN-en-20240205-popsignuptwoweeks-perspective_alpha_website_large.jpg)]">
+        <div className='bg-black p-3 rounded-md flex md:w-2/4 gap-4 h-max md:ml-64 mb-5'>
             <input ref={search} className=' w-full placeholder:text-sm placeholder:pl-5 p-2' placeholder={lang[language].gptPlaceholder}/>
             <button onClick={searchHandler} className='bg-red-500 p-1.5 text-white rounded-md text-sm px-5'>
                 {lang[language].search}
             </button>
         </div>
         {gptResults && (
-            <div className='bg-black flex flex-col p-5 gap-5 bg-opacity-80 rounded-xl'>
+            <div className='bg-black flex flex-col p-5 gap-5 bg-opacity-80 rounded-xl h-full'>
                 {gptResults.map((movie,index) =><GPTMovieList key={index} title={gptFive[index]} data={movie}/>)}
             </div>
         )}

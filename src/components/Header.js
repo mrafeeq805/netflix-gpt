@@ -69,10 +69,10 @@ const Header = () => {
 					<button onClick={toggleHandler} className="text-sm text-white bg-blue-500 p-1.5 px-6 rounded-md">
 						{gpt ? "Home" : "GPT"}
 					</button>
-					<div className="h-8">
+					<div className="h-8 hidden md:block">
 						<img className="h-full rounded-full" src={user?.photo} alt="logo" />
 					</div>
-					<button onClick={signoutHandler} className="text-sm font-bold text-white">
+					<button onClick={signoutHandler} className="text-sm font-bold text-white hidden md:block">
 						Sign Out
 					</button>
 				</div>

@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { addTrailerVideo } from "../utils/movieSlice"
 
 const useGetTrailer = () =>{
-    const details = useSelector((store) => store.movies.trailer)
+    const details = useSelector((store) => store.movies?.trailer)
     const dispatch =useDispatch()
     useEffect(() =>{
-        getApi(details?.id)
-        alert(details?.id)
+       !details && getApi(details?.id)
 
     },[])
     const getApi = async (id) =>{

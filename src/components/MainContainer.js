@@ -4,9 +4,10 @@ import VideoDetails from './VideoDetails'
 
 const MainContainer = () => {
   return (
-    <div>
-        <VideoDetails/>
+    <div className=''>
         <VideoBackground />
+        <VideoDetails/>
+        
 
     </div>
   )

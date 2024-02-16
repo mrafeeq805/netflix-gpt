@@ -4,11 +4,13 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { changeGPTPageToggle } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/languageSlice";
 
 const Header = () => {
 	const dispatch = useDispatch();
+	const supported_languages = SUPPORTED_LANGUAGES
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
@@ -43,6 +45,10 @@ const Header = () => {
 	const gpt = useSelector((store) => store.gpt?.gptPageToggle)
 	const toggleHandler = () =>{
 		dispatch(changeGPTPageToggle(gpt))
+	}	
+	const handleChangeLang = (lang) =>{
+		dispatch(changeLanguage(lang))
+		console.log(lang);
 	}
 	return (
 		<div className="w-full absolute flex justify-between bg-gradient-to-b from-black z-50">
@@ -55,6 +61,11 @@ const Header = () => {
 			</div>
 			{user && (
 				<div className="mr-4 flex justify-center items-center gap-3">
+					{ gpt && (
+						<select onChange={(e) => handleChangeLang(e.target.value)}>
+							{supported_languages.map(lang => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option> )}
+						</select>
+					)}
 					<button onClick={toggleHandler} className="text-sm text-white bg-blue-500 p-1.5 px-6 rounded-md">
 						{gpt ? "Home" : "GPT"}
 					</button>

@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
 import OpenAI from 'openai';
 import movieSlice from '../utils/movieSlice';
-import { API_OPTIONS } from '../utils/constants';
+import { API_OPTIONS, OPEN_AI_KEY } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDetails, addFive } from '../utils/gptSlice';
 import GPTMovieList from './GPTMovieList';
+import lang from '../utils/languageConstants';
 
 
 
@@ -14,8 +15,9 @@ const GPTLayout = () => {
 
     const gptResults = useSelector((store) => store.gpt?.gptResults)
     const gptFive = useSelector((store) => store.gpt?.gptFive)
+    const language = useSelector((store) => store.language?.lang)
     const openai = new OpenAI({
-        apiKey: process.env.OPEN_API_KEY,
+        apiKey: OPEN_AI_KEY,
         dangerouslyAllowBrowser :true // This is the default and can be omitted
     });
     const searchHandler = async() =>{ 
@@ -31,7 +33,6 @@ const GPTLayout = () => {
         const promiseArray = gptMovies.map(movie=>searchMovieTMDB(movie))
         const results = await Promise.all(promiseArray)
         //const finalresult = results.filter(movie=>movie.title in results)
-        console.log(results);
         dispatch(addDetails(results))
 
         
@@ -44,9 +45,9 @@ const GPTLayout = () => {
   return (
     <div className="pt-32 h-screen bg-cover bg-black md:bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/5e16108c-fd30-46de-9bb8-0b4e1bbbc509/29d8d7d7-83cc-4b5f-aa9b-6fd4f68bfaa6/IN-en-20240205-popsignuptwoweeks-perspective_alpha_website_large.jpg)]">
         <div className='bg-black p-3 rounded-md flex w-2/4 gap-4 h-max ml-64 mb-5'>
-            <input ref={search} className=' w-full placeholder:text-sm placeholder:pl-5 p-2' placeholder='Search GPT Query ....'/>
+            <input ref={search} className=' w-full placeholder:text-sm placeholder:pl-5 p-2' placeholder={lang[language].gptPlaceholder}/>
             <button onClick={searchHandler} className='bg-red-500 p-1.5 text-white rounded-md text-sm px-5'>
-                Search
+                {lang[language].search}
             </button>
         </div>
         {gptResults && (

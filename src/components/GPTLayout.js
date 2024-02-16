@@ -15,7 +15,7 @@ const GPTLayout = () => {
     const gptResults = useSelector((store) => store.gpt?.gptResults)
     const gptFive = useSelector((store) => store.gpt?.gptFive)
     const openai = new OpenAI({
-        apiKey: "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",
+        apiKey: process.env.OPEN_API_KEY,
         dangerouslyAllowBrowser :true // This is the default and can be omitted
     });
     const searchHandler = async() =>{ 

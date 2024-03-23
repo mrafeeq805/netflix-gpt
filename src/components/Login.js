@@ -6,6 +6,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	updateProfile,
+	sendPasswordResetEmail
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -18,6 +19,19 @@ const Login = () => {
 	const name = useRef(null);
 	const [login, setLogin] = useState(true);
 	const [errormsg, setErrorMsg] = useState(null);
+	const sendpasswordlink = () => {
+		sendPasswordResetEmail(auth, "muhammedrafeeqv805@gmail.com")
+		.then(() => {
+			console.log("sent");
+		  // Password reset email sent!
+		  // ..
+		})
+		.catch((error) => {
+		  const errorCode = error.code;
+		  const errorMessage = error.message;
+		  // ..
+		});
+	}
 	const validateHandler = () => {
 		const nameValue = login ? null : name.current.value;
 		const msg = validate(
@@ -85,6 +99,9 @@ const Login = () => {
 		<div className="h-screen bg-cover bg-black md:bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/5e16108c-fd30-46de-9bb8-0b4e1bbbc509/29d8d7d7-83cc-4b5f-aa9b-6fd4f68bfaa6/IN-en-20240205-popsignuptwoweeks-perspective_alpha_website_large.jpg)]">
 			<Header />
 			<div className="flex justify-center items-center h-max ">
+				<button onClick={sendpasswordlink} className="bg-white p-5">
+					send
+				</button>
 				<div className="bg-opacity-80 bg-black px-6 mt-16 w-full md:w-4/12 md:px-12 md:py-5 md:rounded-lg">
 					<form
 						onSubmit={(e) => e.preventDefault()}
